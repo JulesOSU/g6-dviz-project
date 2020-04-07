@@ -1,0 +1,27 @@
+---
+title: "ST537-G6-HW1"
+author: ""
+date: "4/6/2020"
+output: 
+  pdf_document: 
+    highlight: tango
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Intro
+
+
+## Facets
+
+## Geoms
+
+## Stats
+
+## Positioning
+
+## Coords
+
