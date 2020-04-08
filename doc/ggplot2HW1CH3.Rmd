@@ -1,6 +1,6 @@
 ---
 title: "ST537-G6-HW1"
-author: ""
+author: "Group6"
 date: "4/6/2020"
 output: 
   pdf_document: 
@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Facets
+This is placeholder for answers to facet questions
 
 ## Geoms
 
