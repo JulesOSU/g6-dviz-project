@@ -10,6 +10,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 ## Intro
@@ -17,6 +18,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Facets
 This is placeholder for answers to facet questions
+```{r facets, echo=TRUE, include=TRUE}
+ ggplot(data = mpg) + 
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+   
+    facet_grid(drv ~ cyl)
+
+ ggplot(data = mpg) + 
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_wrap(. ~ class, nrow=3)
+
+```
 
 ## Geoms
 
