@@ -11,7 +11,9 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(ggplot)
 ```
+
 #### 3.6.1 Exercises
 
 ### 1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
@@ -128,7 +130,6 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(fill = drv), shape = 21, stroke = 2, color = "white", size = 3)
 ```
-
 
 ## Intro
 
