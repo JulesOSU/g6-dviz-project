@@ -12,6 +12,123 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
+#### 3.6.1 Exercises
+
+### 1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
+
+## Line Chart
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
+  geom_line()
+```
+
+## Boxplot
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, group = drv)) +
+  geom_boxplot()
+```
+
+## Histogram
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ)) +
+  geom_histogram()
+```
+
+## Area Chart
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv))
+
+```
+
+### 2. Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.
+
+## looks like this code will add each point and smoothed for hwy against  displ grouped by dy drive
+
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+```
+
+### 3. What does show.legend = FALSE do? What happens if you remove it? Why do you think I used it earlier in the chapter?
+
+##  The show.legend = FALSE means R won't show the legend of the smooth fuction.
+## If you remove it, there is only one legend based on smooth.
+## Used it to show the two different options
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(show.legend = FALSE)
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+### 4. What does the se argument to geom_smooth() do?
+
+##  The se argument to geom_smooth displays confidence interval around smooth.
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+?geom_smooth
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+### 5. Will these two graphs look different? Why/why not?
+
+## These two graphs will look the same because the mapping is the same in geom_point and geom_smooth. 
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth()
+
+ggplot() + 
+  geom_point(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
+```
+
+### 6. Recreate the R code necessary to generate the following graphs.
+
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+```
+
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+```
+
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+```
+
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = drv)) + 
+    geom_smooth(se = FALSE, show.legend = FALSE)
+```
+
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = drv)) +
+  geom_smooth(mapping = aes(linetype = drv), se = FALSE)
+```
+
+```{r cars, echo=TRUE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(fill = drv), shape = 21, stroke = 2, color = "white", size = 3)
+```
+
 
 ## Intro
 
@@ -202,7 +319,7 @@ ggplot(data = mpg) +
 ggplot2 has a shorthand for <geom_point(position = "jitter")>: <geom_jitter()>.   
    
 Other position adjustments: <position_dodge>, <position_fill>, <position_identity>, <position_jitter>, and <position_stack> (look up using ? in R for more info).   
-   
+  
 ### 3.8.1 Exercises   
    
 1) What is the problem with this plot? How could you improve it?   
