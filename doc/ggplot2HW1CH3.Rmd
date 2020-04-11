@@ -13,6 +13,117 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggplot)
 ```
+## 3.5 Facets
+For the facetting questions I subsetted the mpg data to a smaller set to make the plots simpler. 
+The following 2 plots are the same code except one call is to facet_grid and one is to facet_wrap. Facet_wrap lays out a 1D set of plots that slices the main x vs. y plot by the variables specified in the facet call. In this example, the main plot is displ vs. hwy and it is scoped to cyl on the vertical and class on the horizontal.
+```{r facet-wrap-ex, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
+
+# use smaller data set for facets example
+mpg_ex <- subset(mpg, cyl != 5 & cyl!=6 & drv %in% c("4", "f") & class != "2seater" & class!="compact" & class!= "suv")
+
+ ggplot(data = mpg_ex) + 
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_wrap(cyl~class)  +
+  labs(title="facet WRAP example")
+
+```
+
+Facet_grid lays out a 2D set of plots as a matrix. It displays all combinations of the levels that are specified in the call to facet_grid(). It will display a blank plot if there are no observations for the combination of levels. Facet_wrap() will not display empty plots by default. You can display the empty plots by specifying drop=FALSE in method call.    
+```{r facet-grid-ex, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
+ ggplot(data = mpg_ex) + 
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_grid(cyl~class) +
+  labs(title="facet GRID example")
+```
+  
+### 3.5.1 Questions  
+1.Faceting on a continuous variable will give you a plot for each value. There's no categorization or grouping done.  
+```{r fac-q1, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
+   ggplot(data = mpg_ex) + 
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_wrap(. ~ cty, nrow=3)
+
+```
+2.What do empty cells in this plot mean?
+```{r facet-q2-a, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
+ ggplot(data = mpg_ex) + 
+   geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_grid(drv~cyl)
+    
+```
+There are no observations for those levels of the variables. For example, when drv = r and cyl = 5; a rear wheel drive with 5 cylinders is not in the data.
+
+How does that relate to this plot:
+
+```{r facet-q2-b, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
+ ggplot(data = mpg_ex) + 
+   geom_point(mapping = aes(x = drv, y = cyl))
+```
+The facet displays the hwy miles per liter grouped into plots by drive and number of cylinders
+The single plot is just where drv and cyl intersect, it would be easier to see in a histogram format. Discovered geom_col. This is cool and useful!!
+
+```{r facet-q2-c, echo=TRUE, include=TRUE, fig.height=2, fig.width=4}
+ ggplot(data = mpg_ex) + 
+   geom_col(mapping = aes(x = drv, y=cyl))
+
+```
+3. What does the "." in each of these plots do:
+```{r facet-q3, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
+ ggplot(data = mpg_ex) + 
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_grid(drv ~ .)
+ ggplot(data = mpg_ex) + 
+    geom_point(mapping = aes(x = displ, y = hwy)) +
+    facet_grid(. ~ cyl)
+ 
+```
+the "." tells ggplot to omit that dimension (x,y), so the first plot omits the vertical and the second omits the horizontal
+
+4. Consider the plot:
+```{r facet-q4-a, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
+   ggplot(data = mpg_ex) + 
+     geom_point(mapping = aes(x = displ, y = hwy)) +
+     facet_wrap(~ class, nrow=2)
+```
+compare to using color for class
+```{r facet-q4-b, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
+   ggplot(data = mpg_ex) + 
+     geom_point(mapping = aes(x = displ, y = hwy, color=class))
+```
+I think it's easier to look at this data set with class as a color then as a facet wrap or facet grid because you can easily see how different classes of cars compare to each other with respect to the whole set of cars (overview) 
+
+5. 
+Read ?facet_wrap()
+nrow is number of rows
+ncol is number of columns
+why doesn't facet_grid() have nrow or ncol? because the number of rows and cols is determined by the number of levels in the variables you pass to facet_grid determines the horizontal and vertical dimensions of the the plots
+
+What are other options to control layout
+**scales** - the default is to share scales across all facets -> "fixed" is you want to vary the scales based on data then specify "free_x", "free_y", or both "free"
+```{r scales, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
+ ggplot(data = mpg) + 
+   geom_point(mapping = aes(x = displ, y = hwy)) +
+   facet_grid( cyl~ drv, scales = "fixed")
+
+ ggplot(data = mpg) + 
+   geom_point(mapping = aes(x = displ, y = hwy)) +
+   facet_wrap( drv~cyl, scales = "fixed")
+```
+
+**shrink** - TRUE by default, shrink scales to fit statistical output, if false it will use raw data
+**space** - default is for all panels to have same size "fixed" which is the scale of he y variable. Can change it to "free_x" or "free_y"
+**labeller** - complicated different behavior based on type of object you pass to it. See docs.
+**drop** - don't display facets that have no data (only valid with facet_wrap())
+**switch** - changed position that labels are on
+6.
+Why should you put the variable with more unique levels in the columns spot when using facet_grid()? 
+To avoid the y-axis shrinking so small that it becomes hard to see the plotted values.  
+
+Here are some good references for facets:
+
+https://ggplot2-book.org/facet.html  
+https://ggplot2.tidyverse.org/reference/facet_grid.html  
+https://ggplot2.tidyverse.org/reference/facet_wrap.html  
 
 #### 3.6.1 Exercises
 
