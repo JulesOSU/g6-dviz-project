@@ -54,7 +54,7 @@ Coordinate systems provide the ability to specify any given point in a plot. The
 ---What is geom_abline? this puts a line of a particular slope on the graph. By default it puts a 1x1 slope on the graph.
 ---What is coord_fixed? This enforces an "aspect ratio" so that the scales on the x and y axes are fixed in a ratio. 
 
-```{r coordinate systems}
+```{r coordinate systems echo=TRUE, include=TRUE}
 
 # Playing with bar and polar charts
 bar <- ggplot(data = mtcars) +
