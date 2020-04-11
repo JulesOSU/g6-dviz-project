@@ -77,4 +77,105 @@ ggplot(data=mpg, mapping = aes(x = cty, y=hwy)) +
   coord_fixed()
   
 ```
-Hi
+## 3.8 Position Adjustments   
+   
+You can color a bar chart using either the <colour> or <fill> aesthetic:   
+   
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, colour = cut))
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```   
+   
+Mapping the fill aesthetic to a different variable stacks the bars:   
+   
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity))
+```   
+   
+Stacking is performed automatically by the **position adjustment** specificed by the <position> argument. Other options for *position adjustment* are <"identity">, <"dodge">, or <"fill">.   
+   
+<position = "identity"> will place each object exactly where it falls in the context of the graph (overlaps the bars, so we need to use <alpha> or <fill = NA> to see them).   
+   
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
+  geom_bar(alpha = 1/5, position = "identity")
+ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) + 
+  geom_bar(fill = NA, position = "identity")
+```   
+   
+<position = "fill"> makes each set of stacked bars the same height, for proportion comparison.   
+   
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
+```   
+   
+<position = "dodge"> places overlapping objects directly *beside* one another.   
+   
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+```   
+   
+**overplotting**: many points overlapping on the grid and make it hard to see where the mass of the data is.   
+   
+Setting <position = "jitter"> fixes this by adding a small amount of random noise to each point.   
+   
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), position = "jitter")
+```   
+   
+ggplot2 has a shorthand for <geom_point(position = "jitter")>: <geom_jitter()>.   
+   
+Other position adjustments: <position_dodge>, <position_fill>, <position_identity>, <position_jitter>, and <position_stack> (look up using ? in R for more info).   
+   
+### 3.8.1 Exercises   
+   
+1) What is the problem with this plot? How could you improve it?   
+   
+```{r}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_point()
+```   
+   
+The problem with this plot is that it doesn't show all the points, so we are unable to tell where the concentration of observations lie. We can fix this by setting <position = "jitter"> to add a small amount of random noise:   
+   
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x=cty, y=hwy), position = "jitter")
+```   
+   
+2) What parameters to <geom_jitter()> control the amount of jittering?   
+   
+```{r}
+?geom_jitter()
+```   
+   
+<width> and <height> control the amount of horizontal and vertical jitter added in both positive and negative directions. These default to 40% of the resolution of the data (doubled by being both in positive and negative directions so that jitter values are 80% of the bins).   
+   
+3) Compare and contrast <geom_jitter()> with <geom_count()>.   
+   
+```{r}
+?geom_count()
+```   
+   
+Both <geom_jitter()> and <geom_count()> serve the purpose of better displaying many many data points that may otherwise be obscured by binning and consolidation in the plotting defaults. While <geom_jitter> adds a small bit of random noise to move each of the points into view, <geom_count()> "counts the number of observations at each location, then maps the count to point area" so that the viewer can percieve the volume of points in a certain area based on the size of the point shown.   
+   
+4) What's the default position adjustment for <geom_boxplot()>? Create a visualization of the <mpg> dataset that demonstrates it.   
+   
+```{r}
+?geom_boxplot()
+```   
+   
+The default position adjustment seems to be some level of dodging, at least enough that the boxes do not overlap. There is no natural order to the categorical <trans> variable, so I used it and <hwy> in the following example to show how <geom_boxplot()> dodges the categories:   
+   
+```{r}
+ggplot(data = mpg) + 
+  geom_boxplot(mapping = aes(trans,hwy))
+```   
+   
+
