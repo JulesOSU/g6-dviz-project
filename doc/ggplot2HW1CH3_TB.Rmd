@@ -1,17 +1,27 @@
 ---
-title: "ST537-G6-HW1"
+title: "ST537-G6-ggplot2-Week 2"
 author: "Group6"
 
-date: "4/6/2020"
+date: "4/12/2020"
 output: 
   pdf_document: 
     highlight: tango
+    toc: yes
 ---
-Kate Tallan, Julie Sampson, Susan McNerney,
-JakeOetinger, John Olsen,Teresa Burlingame, David Cobertera
+ 
+ 
+ 
+Section 3.5 - Julie Sampson  
+Section 3.6 - Josh Olsen  
+Section 3.7 - Jake Oetinger  
+Section 3.8 - Katie Tallan  
+Section 3.9 - Susan McNerney  
+Section 3.10 - David Cobertera  
+Compilation - Teresa Burlingame   
+
  
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.height = 3, fig.width = 5)
 library(tidyverse)
 library(ggplot2)
 library(plyr)
@@ -226,23 +236,22 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 First, the original plot.
 ```{r, fig.width = 5, fig.height = 3}
 ggplot(data = diamonds) + 
-  stat_summary(
-    mapping = aes(x = cut, y = depth),
+  stat_summary(mapping = aes(x = cut, y = depth),
     fun.min = min,
     fun.max = max,
-    fun = median
+    fun  = median
   )
 ```
 
 The default geom associated with `stat_summary()` is `geom_pointrange()`. To recreate the previous plot using `geom_pointrange()` we can summarize the relevant information before plotting.  
  
 ```{r}
-# d <- diamonds %%
-#   group_by(cut) %%
-#   summarise(min = min(depth), max = max(depth), median = median(depth))
+# d <- diamonds %>%
+#   group_by(cut) %>%
+#    summarise(min = min(depth), max = max(depth), median = median(depth))
 # 
 # ggplot(data = d) +
-#   geom_pointrange(aes(x =, y = median, ymin = min, ymax = max))
+#    geom_pointrange(aes(x =cut, y = median, ymin = min, ymax = max))
 
 ```
 
