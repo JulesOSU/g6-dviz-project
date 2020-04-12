@@ -5,13 +5,12 @@ date: "4/6/2020"
 output: 
   pdf_document: 
     highlight: tango
-    toc: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(ggplot)
+library(ggplot2)
 ```
 ## 3.5 Facets
 For the facetting questions I subsetted the mpg data to a smaller set to make the plots simpler. 
@@ -19,7 +18,8 @@ The following 2 plots are the same code except one call is to facet_grid and one
 ```{r facet-wrap-ex, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
 
 # use smaller data set for facets example
-mpg_ex <- subset(mpg, cyl != 5 & cyl!=6 & drv %in% c("4", "f") & class != "2seater" & class!="compact" & class!= "suv")
+mpg_ex <- subset(mpg, cyl != 5 & cyl!=6 & drv %in% c("4", "f") 
+                 & class != "2seater" & class!="compact" & class!= "suv")
 
  ggplot(data = mpg_ex) + 
     geom_point(mapping = aes(x = displ, y = hwy)) +
@@ -130,25 +130,25 @@ https://ggplot2.tidyverse.org/reference/facet_wrap.html
 ### 1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
 
 ## Line Chart
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
   geom_line()
 ```
 
 ## Boxplot
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, group = drv)) +
   geom_boxplot()
 ```
 
 ## Histogram
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ)) +
   geom_histogram()
 ```
 
 ## Area Chart
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv))
 
 ```
@@ -157,7 +157,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv))
 
 ## looks like this code will add each point and smoothed for hwy against  displ grouped by dy drive
 
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
@@ -168,7 +168,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
 ##  The show.legend = FALSE means R won't show the legend of the smooth fuction.
 ## If you remove it, there is only one legend based on smooth.
 ## Used it to show the two different options
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(show.legend = FALSE)
@@ -181,11 +181,11 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
 ### 4. What does the se argument to geom_smooth() do?
 
 ##  The se argument to geom_smooth displays confidence interval around smooth.
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
-?geom_smooth
+#?geom_smooth
 
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
@@ -195,7 +195,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
 ### 5. Will these two graphs look different? Why/why not?
 
 ## These two graphs will look the same because the mapping is the same in geom_point and geom_smooth. 
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth()
@@ -207,37 +207,37 @@ ggplot() +
 
 ### 6. Recreate the R code necessary to generate the following graphs.
 
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(color = drv)) + 
     geom_smooth(se = FALSE, show.legend = FALSE)
 ```
 
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(color = drv)) +
   geom_smooth(mapping = aes(linetype = drv), se = FALSE)
 ```
 
-```{r cars, echo=FALSE}
+```{r , echo=FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(fill = drv), shape = 21, stroke = 2, color = "white", size = 3)
 ```
@@ -353,7 +353,7 @@ Coordinate systems provide the ability to specify any given point in a plot. The
 ---What is geom_abline? this puts a line of a particular slope on the graph. By default it puts a 1x1 slope on the graph.
 ---What is coord_fixed? This enforces an "aspect ratio" so that the scales on the x and y axes are fixed in a ratio. 
 
-```{r coordinate systems echo=TRUE, include=TRUE}
+```{r coordinate systems, echo=TRUE, include=TRUE}
 
 # Playing with bar and polar charts
 bar <- ggplot(data = mtcars) +
@@ -451,7 +451,7 @@ ggplot(data = mpg) +
 2) What parameters to <geom_jitter()> control the amount of jittering?   
    
 ```{r}
-?geom_jitter()
+#geom_jitter()
 ```   
    
 <width> and <height> control the amount of horizontal and vertical jitter added in both positive and negative directions. These default to 40% of the resolution of the data (doubled by being both in positive and negative directions so that jitter values are 80% of the bins).   
@@ -459,7 +459,7 @@ ggplot(data = mpg) +
 3) Compare and contrast <geom_jitter()> with <geom_count()>.   
    
 ```{r}
-?geom_count()
+#?geom_count()
 ```   
    
 Both <geom_jitter()> and <geom_count()> serve the purpose of better displaying many many data points that may otherwise be obscured by binning and consolidation in the plotting defaults. While <geom_jitter> adds a small bit of random noise to move each of the points into view, <geom_count()> "counts the number of observations at each location, then maps the count to point area" so that the viewer can percieve the volume of points in a certain area based on the size of the point shown.   
@@ -467,7 +467,7 @@ Both <geom_jitter()> and <geom_count()> serve the purpose of better displaying m
 4) What's the default position adjustment for <geom_boxplot()>? Create a visualization of the <mpg> dataset that demonstrates it.   
    
 ```{r}
-?geom_boxplot()
+#?geom_boxplot()
 ```   
    
 The default position adjustment seems to be some level of dodging, at least enough that the boxes do not overlap. There is no natural order to the categorical <trans> variable, so I used it and <hwy> in the following example to show how <geom_boxplot()> dodges the categories:   
