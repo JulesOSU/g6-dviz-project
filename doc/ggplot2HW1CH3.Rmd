@@ -7,7 +7,8 @@ output:
   pdf_document: 
     highlight: tango
 ---
-Kate Tallan, Julie Sampson, Susan McNerney,Jake  Oetinger, John Olsen,Teresa Burlingame, David Cobertera
+Kate Tallan, Julie Sampson, Susan McNerney,
+JakeOetinger, John Olsen,Teresa Burlingame, David Cobertera
  
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -118,7 +119,7 @@ why doesn't facet_grid() have nrow or ncol? because the number of rows and cols 
 
 **What are other options to control layout**
  
-**scales** - the default is to share scales across all facets -> "fixed" is you want to vary the scales based on data then specify "free_x", "free_y", or both "free"
+**scales** - the default is to share scales across all facets - "fixed" is you want to vary the scales based on data then specify "free_x", "free_y", or both "free"
 ```{r scales, echo=TRUE, include=TRUE, fig.height=3, fig.width=5}
  ggplot(data = mpg) + 
    geom_point(mapping = aes(x = displ, y = hwy)) +
@@ -153,25 +154,25 @@ https://ggplot2.tidyverse.org/reference/facet_wrap.html
 **1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?**
 
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 4}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
   geom_line()
 ```
 
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 4}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, group = drv)) +
   geom_boxplot()
 ```
 
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 4}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ)) +
   geom_histogram()
 ```
 
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 4}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv))
 
 ```
@@ -180,7 +181,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv))
 
 It looks like this code will add each point and smoothed for hwy against  displ grouped by dy drive. 
 
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
@@ -192,7 +193,7 @@ The show.legend = FALSE means R won't show the legend of the smooth fuction.
 If you remove it, there is only one legend based on smooth.
 Used it to show the two different options:
  
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(show.legend = FALSE)
@@ -206,7 +207,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
 
 The se argument to geom_smooth displays confidence interval around smooth.
  
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4,fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
@@ -221,7 +222,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
 
 These two graphs will look the same because the mapping is the same in geom_point and geom_smooth. 
  
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth()
@@ -233,37 +234,37 @@ ggplot() +
 
 **6. Recreate the R code necessary to generate the following graphs.**
 
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(color = drv)) + 
     geom_smooth(se = FALSE, show.legend = FALSE)
 ```
 
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(color = drv)) +
   geom_smooth(mapping = aes(linetype = drv), se = FALSE)
 ```
 
-```{r , echo=FALSE}
+```{r , echo=FALSE, fig.width = 4, fig.height = 5}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(fill = drv), shape = 21, stroke = 2, color = "white", size = 3)
 ```
@@ -274,7 +275,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 **Question 1. What is the default geom associated with `stat_summary()`? How could you rewrite the previous plot to use that geom function instead of the stat function?**
 
 First, the original plot.
-```{r}
+```{r, fig.width = 4, fig.height = 5}
 ggplot(data = diamonds) + 
   stat_summary(
     mapping = aes(x = cut, y = depth),
@@ -284,14 +285,16 @@ ggplot(data = diamonds) +
   )
 ```
 
-The default geom associated with `stat_summary()` is `geom_pointrange()`. To recreate the previous plot using `geom_pointrange()` we can summarize the relevant information before plotting. 
+The default geom associated with `stat_summary()` is `geom_pointrange()`. To recreate the previous plot using `geom_pointrange()` we can summarize the relevant information before plotting.  
+ 
 ```{r}
-# d <- diamonds %>% 
-#   group_by(cut) %>% 
+# d <- diamonds %%
+#   group_by(cut) %%
 #   summarise(min = min(depth), max = max(depth), median = median(depth))
 # 
 # ggplot(data = d) +
-#   geom_pointrange(aes(x = cut, y = median, ymin = min, ymax = max))
+#   geom_pointrange(aes(x =, y = median, ymin = min, ymax = max))
+
 ```
 
 **2.What does `geom_col()` do? How is it different to `geom_bar()`?**
@@ -338,7 +341,7 @@ By default, `geom_bar()` groups according to the grouping variable assigned to `
 
 #3.8 Position Adjustments   
    
-You can color a bar chart using either the <colour> or <fill> aesthetic:   
+You can color a bar chart using either the colour or fill aesthetic:   
    
 ```{r}
 ggplot(data = diamonds) + 
@@ -354,9 +357,9 @@ ggplot(data = diamonds) +
   geom_bar(mapping = aes(x = cut, fill = clarity))
 ```   
    
-Stacking is performed automatically by the **position adjustment** specificed by the <position> argument. Other options for *position adjustment* are <"identity">, <"dodge">, or <"fill">.   
+Stacking is performed automatically by the **position adjustment** specificed by the position argument. Other options for *position adjustment* are "identity", "dodge", or "fill".   
    
-<position = "identity"> will place each object exactly where it falls in the context of the graph (overlaps the bars, so we need to use <alpha> or <fill = NA> to see them).   
+position = "identity" will place each object exactly where it falls in the context of the graph (overlaps the bars, so we need to use alpha or fill = NA to see them).   
    
 ```{r}
 ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
@@ -365,14 +368,14 @@ ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) +
   geom_bar(fill = NA, position = "identity")
 ```   
    
-<position = "fill"> makes each set of stacked bars the same height, for proportion comparison.   
+position = "fill" makes each set of stacked bars the same height, for proportion comparison.   
    
 ```{r}
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
 ```   
    
-<position = "dodge"> places overlapping objects directly *beside* one another.   
+position = "dodge" places overlapping objects directly *beside* one another.   
    
 ```{r}
 ggplot(data = diamonds) + 
@@ -381,16 +384,16 @@ ggplot(data = diamonds) +
    
 **overplotting**: many points overlapping on the grid and make it hard to see where the mass of the data is.   
    
-Setting <position = "jitter"> fixes this by adding a small amount of random noise to each point.   
+Setting <position = "jitter" fixes this by adding a small amount of random noise to each point.   
    
 ```{r}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy), position = "jitter")
 ```   
    
-ggplot2 has a shorthand for <geom_point(position = "jitter")>: <geom_jitter()>.   
+ggplot2 has a shorthand for geom_point(position = "jitter"): geom_jitter().   
    
-Other position adjustments: <position_dodge>, <position_fill>, <position_identity>, <position_jitter>, and <position_stack> (look up using ? in R for more info).   
+Other position adjustments: position_dodge, position_fill, position_identity, position_jitter, and position_stack (look up using ? in R for more info).   
   
 #3.8.1 Exercises   
    
@@ -401,36 +404,36 @@ ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
   geom_point()
 ```   
    
-The problem with this plot is that it doesn't show all the points, so we are unable to tell where the concentration of observations lie. We can fix this by setting <position = "jitter"> to add a small amount of random noise:   
+The problem with this plot is that it doesn't show all the points, so we are unable to tell where the concentration of observations lie. We can fix this by setting position = "jitter" to add a small amount of random noise:   
    
 ```{r}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x=cty, y=hwy), position = "jitter")
 ```   
    
-**2. What parameters to <geom_jitter()> control the amount of jittering?**   
+**2. What parameters to geom_jitter() control the amount of jittering?**   
    
 ```{r}
 #geom_jitter()
 ```   
    
-<width> and <height> control the amount of horizontal and vertical jitter added in both positive and negative directions. These default to 40% of the resolution of the data (doubled by being both in positive and negative directions so that jitter values are 80% of the bins).   
+width and height control the amount of horizontal and vertical jitter added in both positive and negative directions. These default to 40% of the resolution of the data (doubled by being both in positive and negative directions so that jitter values are 80% of the bins).   
    
-**3. Compare and contrast <geom_jitter()> with <geom_count()>.**   
+**3. Compare and contrast <geom_jitter() with <geom_count().**   
    
 ```{r}
 #?geom_count()
 ```   
    
-Both <geom_jitter()> and <geom_count()> serve the purpose of better displaying many many data points that may otherwise be obscured by binning and consolidation in the plotting defaults. While <geom_jitter> adds a small bit of random noise to move each of the points into view, <geom_count()> "counts the number of observations at each location, then maps the count to point area" so that the viewer can percieve the volume of points in a certain area based on the size of the point shown.   
+Both <geom_jitter() and <geom_count() serve the purpose of better displaying many many data points that may otherwise be obscured by binning and consolidation in the plotting defaults. While <geom_jitter adds a small bit of random noise to move each of the points into view, <geom_count() "counts the number of observations at each location, then maps the count to point area" so that the viewer can percieve the volume of points in a certain area based on the size of the point shown.   
    
-**4. What's the default position adjustment for <geom_boxplot()>? Create a visualization of the <mpg> dataset that demonstrates it.**
+**4. What's the default position adjustment for <geom_boxplot()? Create a visualization of the <mpg dataset that demonstrates it.**
    
 ```{r}
 #?geom_boxplot()
 ```   
    
-The default position adjustment seems to be some level of dodging, at least enough that the boxes do not overlap. There is no natural order to the categorical <trans> variable, so I used it and <hwy> in the following example to show how <geom_boxplot()> dodges the categories:   
+The default position adjustment seems to be some level of dodging, at least enough that the boxes do not overlap. There is no natural order to the categorical <trans variable, so I used it and <hwy in the following example to show how <geom_boxplot() dodges the categories:   
    
 ```{r}
 ggplot(data = mpg) + 
@@ -498,4 +501,52 @@ Layered grammar of graphic have seven parameters in the template:
 5. A position adjustment
 6. A coordinate system
 7. A faceting scheme
+
+
+**Get data and Represent in a bar**
+
+By choosing geometric object, like a bars.
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut))
+```
+
+
+**Map the fill of each bar to the count variable**
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```
+
+**5. Place geoms in a cartesian coordiantes systems**
+
+Display the values of the x and y variables. 
+
+Adjust the postion by:
+  *Coordinate system (a position adjustment)
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+```
+  
+  *Split the graph into subplots (faceting)
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill=clarity))+
+  facet_grid(~clarity)
+```
+  
+  *Add more layer and modified the graph
+  
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill=cut))+
+  facet_grid(~clarity)+
+  theme(axis.text.x = element_blank())
+```
+  
+
+
 
