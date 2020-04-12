@@ -419,13 +419,13 @@ ggplot(data = mpg) +
    
 width and height control the amount of horizontal and vertical jitter added in both positive and negative directions. These default to 40% of the resolution of the data (doubled by being both in positive and negative directions so that jitter values are 80% of the bins).   
    
-**3. Compare and contrast <geom_jitter() with <geom_count().**   
+**3. Compare and contrast geom_jitter() with geom_count().**   
    
 ```{r}
 #?geom_count()
 ```   
    
-Both <geom_jitter() and <geom_count() serve the purpose of better displaying many many data points that may otherwise be obscured by binning and consolidation in the plotting defaults. While <geom_jitter adds a small bit of random noise to move each of the points into view, <geom_count() "counts the number of observations at each location, then maps the count to point area" so that the viewer can percieve the volume of points in a certain area based on the size of the point shown.   
+Both geom_jitter() and geom_count() serve the purpose of better displaying many many data points that may otherwise be obscured by binning and consolidation in the plotting defaults. While geom_jitter adds a small bit of random noise to move each of the points into view, geom_count() "counts the number of observations at each location, then maps the count to point area" so that the viewer can percieve the volume of points in a certain area based on the size of the point shown.   
    
 **4. What's the default position adjustment for <geom_boxplot()? Create a visualization of the <mpg dataset that demonstrates it.**
    
@@ -433,7 +433,7 @@ Both <geom_jitter() and <geom_count() serve the purpose of better displaying man
 #?geom_boxplot()
 ```   
    
-The default position adjustment seems to be some level of dodging, at least enough that the boxes do not overlap. There is no natural order to the categorical <trans variable, so I used it and <hwy in the following example to show how <geom_boxplot() dodges the categories:   
+The default position adjustment seems to be some level of dodging, at least enough that the boxes do not overlap. There is no natural order to the categorical trans variable, so I used it and <hwy in the following example to show how geom_boxplot() dodges the categories:   
    
 ```{r}
 ggplot(data = mpg) + 
