@@ -151,124 +151,73 @@ https://ggplot2.tidyverse.org/reference/facet_wrap.html
 
 ##3.6.1 Exercises
 
-**1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?**
+**1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
+
+geom_line for Line Chart, geom_boxplot for boxplot, geom_histogram for historgram, and geom_area for area chart.
 
 
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
-  geom_line()
-```
+**2. Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.
 
+Looks like this code will add each point for displ and hwy variables grouped by drv variable. Also, the should see the mean.
 
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, group = drv)) +
-  geom_boxplot()
-```
-
-
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
-ggplot(data = mpg, mapping = aes(x = displ)) +
-  geom_histogram()
-```
-
-
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv))
-
-```
-
-**2. Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.**
-
-It looks like this code will add each point and smoothed for hwy against  displ grouped by dy drive. 
-
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
+```{r mpg, echo = FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-**3. What does show.legend = FALSE do? What happens if you remove it? Why do you think I used it earlier in the chapter?**
+The code adds each point for displ and hwy variables grouped by drv variable by color. Also, the mean grouped by drv by color. Pretty close to our prediction.
+
+**3. What does show.legend = FALSE do? What happens if you remove it? Why do you think I used it earlier in the chapter?
 
 The show.legend = FALSE means R won't show the legend of the smooth fuction.
-If you remove it, there is only one legend based on smooth.
-Used it to show the two different options:
- 
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
-  geom_point() + 
-  geom_smooth(show.legend = FALSE)
+If you remove it, there is only one legend based on the point function.
+It was used earlier in the charter because it shows the two different options with two different functions.
 
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
-  geom_point() + 
-  geom_smooth()
-```
-
-**4. What does the se argument to geom_smooth() do?**
+**4. What does the se argument to geom_smooth() do?
 
 The se argument to geom_smooth displays confidence interval around smooth.
- 
-```{r , echo=FALSE, fig.width = 4,fig.height = 5}
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
-  geom_point() + 
-  geom_smooth(se = FALSE)
-#?geom_smooth
 
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
-  geom_point() + 
-  geom_smooth()
-```
-
-**5. Will these two graphs look different? Why/why not?**
+**5. Will these two graphs look different? Why/why not?
 
 These two graphs will look the same because the mapping is the same in geom_point and geom_smooth. 
- 
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
-  geom_point() + 
-  geom_smooth()
 
-ggplot() + 
-  geom_point(data = mpg, mapping = aes(x = displ, y = hwy)) + 
-  geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
-```
+**6. Recreate the R code necessary to generate the following graphs.
 
-**6. Recreate the R code necessary to generate the following graphs.**
-
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
+```{r mpg, echo = FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+```{r mpg, echo = FALSE}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, grpup = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
+```{r mpg, echo = FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
+```{r mpg, echo = FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(color = drv)) + 
-    geom_smooth(se = FALSE, show.legend = FALSE)
+  geom_smooth(se = FALSE, show.legend = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
+```{r mpg, echo = FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(color = drv)) +
   geom_smooth(mapping = aes(linetype = drv), se = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 5, fig.height = 3}
+```{r mpg, echo = FALSE}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(fill = drv), shape = 21, stroke = 2, color = "white", size = 3)
 ```
-
 
 #3.7 Statistical transformations
 
