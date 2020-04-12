@@ -241,17 +241,20 @@ ggplot(data = diamonds) +
     fun.max = max,
     fun  = median
   )
+
 ```
 
 The default geom associated with `stat_summary()` is `geom_pointrange()`. To recreate the previous plot using `geom_pointrange()` we can summarize the relevant information before plotting.  
  
 ```{r}
-# d <- diamonds %>%
-#   group_by(cut) %>%
-#    summarise(min = min(depth), max = max(depth), median = median(depth))
-# 
-# ggplot(data = d) +
-#    geom_pointrange(aes(x =cut, y = median, ymin = min, ymax = max))
+ggplot(data = diamonds) +
+  geom_pointrange(
+    mapping = aes(x = cut, y = depth),
+    stat = "summary",
+    fun.min = min,
+    fun.max = max,
+    fun = median
+  )
 
 ```
 
