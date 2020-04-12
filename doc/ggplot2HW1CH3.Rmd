@@ -154,25 +154,25 @@ https://ggplot2.tidyverse.org/reference/facet_wrap.html
 **1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?**
 
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
   geom_line()
 ```
 
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, group = drv)) +
   geom_boxplot()
 ```
 
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ)) +
   geom_histogram()
 ```
 
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv))
 
 ```
@@ -181,7 +181,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv))
 
 It looks like this code will add each point and smoothed for hwy against  displ grouped by dy drive. 
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
@@ -193,7 +193,7 @@ The show.legend = FALSE means R won't show the legend of the smooth fuction.
 If you remove it, there is only one legend based on smooth.
 Used it to show the two different options:
  
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(show.legend = FALSE)
@@ -222,7 +222,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
 
 These two graphs will look the same because the mapping is the same in geom_point and geom_smooth. 
  
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth()
@@ -234,37 +234,37 @@ ggplot() +
 
 **6. Recreate the R code necessary to generate the following graphs.**
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
   geom_point() + 
   geom_smooth(se = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(color = drv)) + 
     geom_smooth(se = FALSE, show.legend = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(color = drv)) +
   geom_smooth(mapping = aes(linetype = drv), se = FALSE)
 ```
 
-```{r , echo=FALSE, fig.width = 4, fig.height = 5}
+```{r , echo=FALSE, fig.width = 5, fig.height = 3}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point(mapping = aes(fill = drv), shape = 21, stroke = 2, color = "white", size = 3)
 ```
@@ -275,7 +275,7 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 **Question 1. What is the default geom associated with `stat_summary()`? How could you rewrite the previous plot to use that geom function instead of the stat function?**
 
 First, the original plot.
-```{r, fig.width = 4, fig.height = 5}
+```{r, fig.width = 5, fig.height = 3}
 ggplot(data = diamonds) + 
   stat_summary(
     mapping = aes(x = cut, y = depth),
