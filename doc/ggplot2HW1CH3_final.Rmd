@@ -356,7 +356,7 @@ ggplot2 has a shorthand for geom_point(position = "jitter"): geom_jitter().
    
 Other position adjustments: position_dodge, position_fill, position_identity, position_jitter, and position_stack (look up using ? in R for more info).   
   
-#3.8.1 Exercises   
+##3.8.1 Exercises   
    
 **1.What is the problem with this plot? How could you improve it?**   
    
@@ -411,18 +411,28 @@ Coordinate systems provide the ability to specify any given point in a plot. The
 --coord_quickmap() used for special mapping in plots, for example on a map of Oregon.
 --coord_polar() 
 
-**Coordinate Systems exercises** 
+##Coordinate Systems exercises
 
 **1. Create a polar plot: see below**
  
-**2. What does labs() do? It allows adding titles, subtitles, captions, tags, and labels to the charts. Title was added to the charts below this way.**
- 
-**3. What is the difference between coord_map and coord_quickmap? Coord_map attempts to represent geography on a spherical plane, whereas coord_quickmap assumes the plane is flat. Coord_quickmap is best for smaller geographical areas where distortion won't cause problems with the data representation.**
- 
-**4. What does this plot tell you about the relationship between city and highway mpg? Higher city mileage is associated with higher highway mileage, but as hwy mileage goes up, there is a slight lag in city mileage increase ( the overall slope of the data seems to tilt left of the neutral line)**
+**2. What does labs() do?**  
 
----What is geom_abline? this puts a line of a particular slope on the graph. By default it puts a 1x1 slope on the graph.
----What is coord_fixed? This enforces an "aspect ratio" so that the scales on the x and y axes are fixed in a ratio.
+It allows adding titles, subtitles, captions, tags, and labels to the charts. Title was added to the charts below this way.
+  
+**3. What is the difference between coord_map and coord_quickmap?**
+
+Coord_map attempts to represent geography on a spherical plane, whereas coord_quickmap assumes the plane is flat. Coord_quickmap is best for smaller geographical areas where distortion won't cause problems with the data representation.
+ 
+**4. What does this plot tell you about the relationship between city and highway mpg?**  
+ Higher city mileage is associated with higher highway mileage, but as hwy mileage goes up, there is a slight lag in city mileage increase ( the overall slope of the data seems to tilt left of the neutral line)
+
+**What is geom_abline?**
+
+This puts a line of a particular slope on the graph. By default it puts a 1x1 slope on the graph.
+
+**What is coord_fixed?**
+ 
+This enforces an "aspect ratio" so that the scales on the x and y axes are fixed in a ratio.
 
 ```{r coordinate systems, echo=TRUE, include=TRUE}
 
