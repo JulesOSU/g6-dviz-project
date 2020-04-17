@@ -1,3 +1,5 @@
+library(tidyverse)
+
 commute <- read_rds(url("http://data.cwick.co.nz/commute.rds"))
 
 # a subset of "Western" states for class
