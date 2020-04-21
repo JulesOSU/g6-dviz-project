@@ -1,0 +1,65 @@
+---
+title: "Alternative Commute Plot"
+author: "David Cobertera"
+date: "April 9, 2020"
+output:
+  pdf_document: default
+  word_document: default
+header-includes: \usepackage{booktabs}
+---
+
+# Alternative Commute Plot
+
+**Loads library**
+
+```{r results='hide', message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(png)
+library(grid)
+library(magick)
+```
+
+*data*
+```{r}
+commute <- read_rds(url("http://data.cwick.co.nz/commute.rds"))
+```
+
+*subset of "western" state for class*
+
+```{r}
+states <- c("or", "ak", "ca", "wa", "id", "nv")
+commute_nw <- filter(commute, state %in% states)
+```
+
+**People in Oregon commute by bicycle more than in other (nearby) states**
+
+```{r}
+Bike<-commute_nw[ which(commute_nw$transport_type =="Bicycle"),]
+
+Bike_background<-image_read("https://www.asturiascycling.com/wp-content/uploads/2018/10/road-bike-png-5.png")
+
+p<-ggplot(data=Bike, aes(x=reorder(state_name,-prop), y=prop, fill=state_name))+
+  annotation_custom(rasterGrob(Bike_background, 
+                               width = unit(1,"npc"), 
+                               height = unit(1,"npc")), 
+                    -Inf, Inf, -Inf, Inf) +
+  geom_bar(stat = "identity")+
+  scale_y_continuous(expand=expansion(mult = c(0,0.1)))+
+  labs(x = NULL, y = NULL)+
+  ggtitle("People in Oregon commut by bicycle more \n than in other (nearby) states")+
+  scale_fill_manual(values = c("#D3D3D3","#D3D3D3","#D3D3D3","#D3D3D3","#002a86","#D3D3D3"))+
+  theme_classic() +
+  theme(legend.position = "none",
+        panel.grid.major.x = element_blank())+
+  theme(plot.title = element_text(size=20, face = "bold"))+
+  theme(axis.text = element_text(size = 14))
+   
+
+p
+ 
+```
+`
+
+
+
