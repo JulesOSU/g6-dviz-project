@@ -1,0 +1,49 @@
+---
+title: "Data Viz slopegraphs - McNerney"
+output: html_notebook
+---
+
+## slope Graph - Tufte - Group Assignment Week 5
+
+```{r slopey stuff}
+
+#install.packages("ggrepel")
+library(ggrepel)
+library(tidyverse)
+
+
+# Data Set
+tax <- tribble(
+  ~ Country,     ~ `1970`, ~ `1979`,
+  "Sweden",          46.9,     57.4,
+  "Netherlands",     44.0,     55.8,
+  "Norway",          43.5,     52.2,
+  "Britain",         40.7,     39.0,
+  "France",          39.0,     43.4,
+  "Germany",         37.5,     42.9,
+  "Belgium",         35.2,     43.2,
+  "Canada",          34.9,     35.8,
+  "Finland",         34.9,     38.2,
+  "Italy",           30.4,     35.7,
+  "United States",   30.3,     32.5,
+  "Greece",          26.8,     30.6,
+  "Switzerland",     26.5,     33.2,
+  "Spain",           22.5,     27.1,
+  "Japan",           20.7,     26.6
+)
+
+
+tax_pivoted <- tax %>% pivot_longer(c("1970","1979"), names_to = "Year")
+
+tax_pivoted
+
+tax_slope <- ggplot(tax_pivoted, aes(Year, value)) + 
+  geom_line()+
+  geom_text_repel(aes(label=Country))
+
+# p<-ggplot(a) + geom_segment(aes(x=0,xend=months,y=year1,yend=year3),size=.75)
+
+tax_slope
+```
+
+
