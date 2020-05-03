@@ -1,4 +1,5 @@
 library(tidyverse)
+library(directlabels)
 
 #Create data set
 budget <- tribble(
@@ -28,9 +29,12 @@ budget2$Month <- budget2$Month %>%
 ggplot(budget2) + 
   geom_line(aes(x = Month, y = Actual-Budget, color = Type, group=Type))
 
+axisx2<-data.frame(Mon=c(0.25:13),y=0)
+
 ggplot(budget2,aes(x = Month, y = Actual-Budget, color = Type, group=Type)) +
   geom_line(size=1.2)+
   geom_point()+
+  geom_line(data=axisx2, aes(x=Mon, y=y, group=y), color="grey80")+
   geom_dl(aes(label = Type), method = list(dl.trans(x = x + .2), "last.points"))+
   ggtitle("Expense Variance from Budget in U.S Dollars")+
   theme_classic()+
@@ -39,12 +43,14 @@ ggplot(budget2,aes(x = Month, y = Actual-Budget, color = Type, group=Type)) +
   theme(axis.title = element_blank())+
   theme(axis.line = element_line(color = "grey"))+
   theme(axis.line.x = element_blank())+
-  expand_limits(x= c(0, 15))+
+  # xlim(c(1,15))+
+  expand_limits(x= c(1, 15))+
   expand_limits(y= c(-4000, 14000))+
   theme(axis.ticks=element_blank())+
-  geom_hline(yintercept=0, linetype="dashed", color = "grey")+
+  #geom_hline(yintercept=0, linetype="dashed", color = "grey")+
   
   scale_y_continuous(breaks=c(seq(-4000, 14000, by=2000)))
+
 
 #Figure 9.9
 ggplot(budget2) + 
@@ -53,6 +59,7 @@ ggplot(budget2) +
 ggplot(budget2,aes(x = Month, y = ((Actual-Budget)/Budget)*100, color = Type, group=Type)) +
   geom_line(size=1.2)+
   geom_point()+
+  geom_line(data=axisx2, aes(x=Mon, y=y, group=y), color="grey80")+
   geom_dl(aes(label = Type), method = list(dl.trans(x = x + .2), "last.points"))+
   ggtitle("Percentatge Variance of Expenses from Budget")+
   theme_classic()+
@@ -61,13 +68,13 @@ ggplot(budget2,aes(x = Month, y = ((Actual-Budget)/Budget)*100, color = Type, gr
   theme(axis.title = element_blank())+
   theme(axis.line = element_line(color = "grey"))+
   theme(axis.line.x = element_blank())+
-  expand_limits(x= c(0, 15))+
+  # xlim(c(1,15))+
+  expand_limits(x= c(1, 15))+
   expand_limits(y= c(-20, 25))+
   theme(axis.ticks=element_blank())+
-  geom_hline(yintercept=0, linetype="dashed", color = "grey")+
+  #geom_hline(yintercept=0, linetype="dashed", color = "grey")+
   
   scale_y_continuous(breaks=c(seq(-20, 25, by=5)), labels = function(x) paste0(x,"%"))
-
 
 
 
