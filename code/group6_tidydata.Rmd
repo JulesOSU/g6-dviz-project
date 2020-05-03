@@ -1,20 +1,24 @@
 ---
 title: "Practice Tidy Data, Group 6"
-author: Teresa Burlingame, Julie Sampson, Josh Olsen, Jake Oetinger, Katie Tallan,
-  Susan McNerny, David Corbertera
+
 date: "May 3, 2020"
 output: pdf_document
 ---
-
+Teresa Burlingame, Julie Sampson,
+ 
+Josh Olsen,Jake Oetinger, Katie Tallan,
+ 
+Susan McNerny, David Corbertera
+ 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = F)
 library(tidyverse)
 library(ggrepel)
 library(directlabels)
 
 ```
 
-## slope Graph - Tufte - Group Assignment Week 5
+## slope Graph - Tufte
 
 ```{r slopey stuff}
 
@@ -41,18 +45,18 @@ tax <- tribble(
   "Japan",           20.7,     26.6
 )
 
-
 tax_pivoted <- tax %>% pivot_longer(c("1970","1979"), names_to = "Year")
-
 tax_pivoted
-
-tax_slope <- ggplot(tax_pivoted, aes(Year, value)) + 
-  geom_line()+
-  geom_text_repel(aes(label=Country))
-
+tax_slope <- ggplot(tax_pivoted, aes(Year, value, label = Country)) + 
+  geom_text_repel(aes(label=Country)) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  geom_line(aes(group = Country), colour = "grey50")
+# p<-ggplot(a) + geom_segment(aes(x=0,xend=months,y=year1,yend=year3),size=.75)
+tax_slope
 # p<-ggplot(a) + geom_segment(aes(x=0,xend=months,y=year1,yend=year3),size=.75)
 
-tax_slope
 ```
 
 ##Volcano Heat Map
@@ -78,7 +82,7 @@ ggplot(heat_map)+
 ## Question 3
 
 
-```{r Q3, echo=FALSE}
+```{r Q3}
 #Create data set
 budget <- tribble(
   ~ Expenses,             ~ Jan, ~ Feb, ~ Mar, ~ Apr, ~ May, ~ Jun, ~ Jul, ~ Aug, ~ Sep, ~ Oct, ~ Nov, ~ Dec,
@@ -104,8 +108,8 @@ budget2$Month <- budget2$Month %>%
                 "Jul","Aug","Sep","Oct","Nov","Dec"))
 
 #Figure 9.8
-ggplot(budget2) + 
-  geom_line(aes(x = Month, y = Actual-Budget, color = Type, group=Type))
+# ggplot(budget2) + 
+#   geom_line(aes(x = Month, y = Actual-Budget, color = Type, group=Type))
 
 axisx2<-data.frame(Mon=c(0.25:13),y=0)
 
@@ -131,8 +135,8 @@ ggplot(budget2,aes(x = Month, y = Actual-Budget, color = Type, group=Type)) +
 
 
 #Figure 9.9
-ggplot(budget2) + 
-  geom_line(aes(x = Month, y = ((Actual-Budget)/Budget)*100, color = Type, group=Type))
+# ggplot(budget2) + 
+#   geom_line(aes(x = Month, y = ((Actual-Budget)/Budget)*100, color = Type, group=Type))
 
 ggplot(budget2,aes(x = Month, y = ((Actual-Budget)/Budget)*100, color = Type, group=Type)) +
   geom_line(size=1.2)+
