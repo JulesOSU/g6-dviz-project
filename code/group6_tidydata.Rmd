@@ -8,7 +8,7 @@ Teresa Burlingame, Julie Sampson,
  
 Josh Olsen,Jake Oetinger, Katie Tallan,
  
-Susan McNerny, David Corbertera
+Susan McNerney, David Cobertera
  
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = F)
@@ -162,5 +162,5 @@ ggplot(budget2,aes(x = Month, y = ((Actual-Budget)/Budget)*100, color = Type, gr
 
 
 ```
-```
+
 
