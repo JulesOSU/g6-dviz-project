@@ -71,6 +71,52 @@ ggplot(diamonds[(diamonds$y < 20) & (diamonds$y > 0),]) +
 
 By removing unusual observations we can get a much more detailed look at how the sizes of diamonds are distributed. I would guess the multiple peaks are due to jewelers rounding up to meet a particular size with a prespecified price point, but we never would have seen this interesting pattern without removing the outliers. 
 
+## Section 7.5.2. Two Categorical Variables   
+   
+One technique to visualise the corvariation between two categorical variables. 
+The book uses the diamond dataset. Two cateogrical variables in the example include cut and color. 
+
+***Two Categorical Variables***
+Cut = Fair, Good, Very Good, Premium, and Ideal
+Color = J, I, H, G, F, E, D
+
+To plot two categorical variables
+We can count the number of observations for each combination. 
+The book states - One way to do that is to reply on the built-in geom_count()
+
+
+```{r}
+#install.packages("dplyr") (Commented out for smoother run)
+library(dplyr)
+library(ggplot2)
+```   
+   
+Plot diamonds dataset. Geom count to cut and color 
+   
+```{r}
+
+ggplot(data = diamonds) +
+  geom_count(mapping = aes(x = cut, y = color))
+
+```   
+   
+The book describes another way to visualise by using geom_title and fill aesthetic.
+The fill will be the total of teach each color to each cut 
+   
+```{r}
+diamonds %>% 
+  count(color, cut) %>%  
+  ggplot(mapping = aes(x = color, y = cut)) +
+    geom_tile(mapping = aes(fill = n))
+
+```   
+   
+We can see that the color G has the most number of ideal diamond cuts. 
+F and H colors have a higher amount of ideal diamonds but as many as G. 
+
+To the contrast, the fair cut has the about the same amount for all colors. As the cut grade goes from fair to ideal colors G, F, H, and E have more diamonds than colors D, E, I, and J.
+
+
 ## Section 7.5.3. Two Continuous Variables   
    
 Overplotting becomes an issue when there are many points in the same area, and using transparency, while simple, doesn't always help. Often there are SO many points in a close area that it still doesn't do the volume of points justice. There are a few other options to help with this issue - one of them is using hexagonal bins and color scale to represent the density of points in an area. This is demonstrated below:   
