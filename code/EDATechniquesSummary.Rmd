@@ -68,3 +68,47 @@ ggplot(diamonds[(diamonds$y < 20) & (diamonds$y > 0),]) +
 
 By removing unusual observations we can get a much more detailed look at how the sizes of diamonds are distributed. I would guess the multiple peaks are due to jewelers rounding up to meet a particular size with a prespecified price point, but we never would have seen this interesting pattern without removing the outliers. 
 
+## Section 7.5.3. Two Continuous Variables   
+   
+Overplotting becomes an issue when there are many points in the same area, and using transparency, while simple, doesn't always help. Often there are SO many points in a close area that it still doesn't do the volume of points justice. There are a few other options to help with this issue - one of them is using hexagonal bins and color scale to represent the density of points in an area. This is demonstrated below:   
+   
+First, load the package "hexbin":   
+   
+```{r}
+#install.packages("hexbin") (Commented out for smoother run)
+library(hexbin)
+```   
+   
+Then, load in and format the data to be used:   
+   
+```{r}
+library(fueleconomy)
+vehicles <- vehicles
+nonelectricvehicles <- subset(vehicles,vehicles$fuel!="Electricity")
+```   
+   
+This dataset contains a massive number of vehicles with non-electric fuel sources. So when we attempt to plot in-town and highway fuel economies (both continuous variables) for all non-electric cars in the dataset, we get an overplotting issue:   
+   
+```{r}
+library(ggplot2)
+ggplot() +
+  geom_point(mapping=aes(cty,hwy),data=nonelectricvehicles) +
+  ggtitle("Non-Electric Vehicle Fuel Economy") +
+  xlab("In-town Fuel Economy (mpg)") +
+  ylab("Highway Fuel Economy (mpg)") +
+  theme(plot.title = element_text(hjust = 0.5))
+```   
+   
+We can tell that these points are overplotted because there are over 33,000 vehicles plotted in the figure, and there appear to be FAR fewer points than that (meaning a lot of them are overlapping exactly). So we can implement the hexagonal bins method of dealing with overplotting:   
+   
+```{r}
+ggplot(data=nonelectricvehicles) +
+  geom_hex(mapping = aes(cty,hwy)) +
+  ggtitle("Non-Electric Vehicle Fuel Economy") +
+  xlab("In-town Fuel Economy (mpg)") +
+  ylab("Highway Fuel Economy (mpg)") +
+  scale_fill_continuous(name="Number of Vehicles") +
+  theme(plot.title = element_text(hjust = 0.5))
+```   
+   
+This plot does a much better job of showing the distribution of fuel economies. The color scale allows the viewer to see that a much larger number of vehicles fall into a small middle range of highway and in-town fuel economies. This method will be most useful in situations similar to this one - where there are many many observations with similar values, which still need to be explored carefully, and with patterns which the creator of the graphic does not want to be obscured by the sheer volume of points.   
