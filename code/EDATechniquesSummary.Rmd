@@ -208,7 +208,7 @@ ggplot(data = diamonds) +
 
 ```
 
-#### Need section number for this one
+#### 7.5.3 
 
 Overplotting becomes an issue when there are many points in the same area, and using transparency, while simple, doesn't always help. Often there are SO many points in a close area that it still doesn't do the volume of points justice. There are a few other options to help with this issue - one of them is using hexagonal bins and color scale to represent the density of points in an area. This is demonstrated below:   
    
