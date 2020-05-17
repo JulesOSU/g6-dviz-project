@@ -52,7 +52,7 @@ ggplot(data = diamonds, mapping = aes(x = price, y = ..density..)) +
 
 The freq_poly plots produced 7 categories, making it difficult to read. Another example would be a box plot. The box shows the 25th, 50th and 75th percentile, with outliers as individual points and points outside of those percentiles as whiskers. Below it is much more clear that H I and J have higher average prices, but they also have wider spreads. 
 
-```{r}
+```{r 2000}
 ggplot(data = diamonds, mapping = aes(x = color, y = price)) +
   geom_boxplot()
 ```
@@ -61,14 +61,14 @@ ggplot(data = diamonds, mapping = aes(x = color, y = price)) +
 
 During exploratory data analysis it's always a good idea to check for outliers or unusual observations. Sometimes outliers are errors in a dataset, and sometimes they are genuine observations that are just outside the normal bounds for a particular variable. Often times it is difficult to tell, so further exploration is generally required. Let's examine the distribution of diamond sizes by plotting a histogram of the y-dimension measured in mm. 
 
-```{r}
+```{r 2001}
 ggplot(diamonds) + 
   geom_histogram(mapping = aes(x = y), binwidth = 0.5, color = "white")
 ```
 
 The unusually wide x-axis gives us reason to suspect that there may be a few outliers with counts so low that they don't even show up on a histogram. Change the scale of the y-axis to get a better look. 
 
-```{r}
+```{r 2002}
 ggplot(diamonds) + 
   geom_histogram(mapping = aes(x = y), binwidth = 0.5, color = "white") +
   coord_cartesian(ylim = c(0, 50))
@@ -76,7 +76,7 @@ ggplot(diamonds) +
 
 We can see two outlying observations around 30 and 60, and a handful at 0. Let's examine these cases further. We'll look at the `x` and `z` variables as well to get a better idea of the actual sizes and we will include `price` to see if there is anything unusual there. 
 
-```{r}
+```{r 2003}
 unusual <- diamonds %>% 
   filter(y < 3 | y > 20) %>% 
   select(price, x, y, z) %>%
@@ -87,7 +87,7 @@ unusual
 
 It is impossible for a diamond to have dimensions of 0, so we can assume these are measurement errors or perhaps a coded value which means something else. The other two observations have more reasonable `x` and `z` values, so it seems reasonable to assume that these are measurement errors. Let's remove all the unusual observations by subsetting the data inside the `ggplot()` function, and see what the distribution looks like. 
 
-```{r}
+```{r 2004}
 ggplot(diamonds[(diamonds$y < 20) & (diamonds$y > 0),]) + 
   geom_histogram(aes(y), binwidth = 0.05, color = "white")
 ```
@@ -108,7 +108,7 @@ We can count the number of observations for each combination.
 The book states - One way to do that is to reply on the built-in geom_count()
 
 
-```{r}
+```{r 2005}
 library(dplyr)
 library(ggplot2)
 ```   
