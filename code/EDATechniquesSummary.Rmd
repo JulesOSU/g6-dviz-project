@@ -10,8 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-## 7.3.1 Visualizing Distributions
-### doubledecker()
 
 ## Covariation of a Categorical and a Continuous Variable:
 
