@@ -8,8 +8,34 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(vcd)
+library(effects)
 ```
 
+## Section 7.3.1 Visualizing Categorical Distributions  
+
+### doubledecker()  
+
+**__doubledecker()__** is a mosaic plot that is used for categorical data  to visualize contingency tables. The plots offer a graphical way to display dependencies and associations among variables in a data set. The api is in the vcd package. For example, the Arrests data from Toronto, If you want to look at the influence of "citizen" and "colour" on being "released", you can use a doubledecker plot to do this.
+
+**__doubledecker()__** varies from a standard mosaic in that you specify one dependent variable of interest which permutates the table and is the last dimension specified in the plot. Here's an example of the generated plot.  
+
+```{r sect7-3, echo=TRUE, include=TRUE}
+dat <- Arrests
+doubledecker(released ~ citizen +colour, data=Arrests, gp =( gpar(fill = c("orange", "blue"))), main=TRUE)
+
+
+```
+Using gp in this context applies the supplied vars to only the dependent variable.  
+
+### assoc ()  
+
+Another useful mosaic plot for visualizing associations is **__asssoc()__**. The area of the box is proportional to the difference in observed and expected frequencies. The placement of the box is relative to the baseline for independence (0), so if it's greater than the baseline, it's above the line, otherwise its below the line. 
+
+```{r sect7-3b, echo=TRUE, include=TRUE}
+
+assoc(released ~ citizen + colour, data=Arrests, shade=TRUE, main=TRUE, comnpress = FALSE)
+```
 
 ## Covariation of a Categorical and a Continuous Variable:
 
