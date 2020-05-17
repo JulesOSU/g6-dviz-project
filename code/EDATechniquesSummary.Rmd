@@ -5,7 +5,66 @@ date: "5/11/2020"
 output: pdf_document
 ---
 
-```{r}
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
+
+## Covariation of a Categorical and a Continuous Variable:
+
+The book gave two examples of how to deal with a categorical and continuous variable that have covariation. One technique that was given was comparing the **density** of variables rather than the **count**. This can lead to more interpretable visualization when the counts across categorical variables are not very even. The below plots compare the same data of the diamonds data set, but rather than looking at count the second plot looks at density. You can see that colors H and I and J appear to more regulary have diamonds in a higher price point. 
+
+
+```{r density}
+ggplot(data = diamonds, mapping = aes(x = price)) + 
+  geom_freqpoly(mapping = aes(colour = color), binwidth = 500)
+ggplot(data = diamonds, mapping = aes(x = price, y = ..density..)) + 
+  geom_freqpoly(mapping = aes(colour = color), binwidth = 500)
+```
+
+
+The freq_poly plots produced 7 categories, making it difficult to read. Another example would be a box plot. The box shows the 25th, 50th and 75th percentile, with outliers as individual points and points outside of those percentiles as whiskers. Below it is much more clear that H I and J have higher average prices, but they also have wider spreads. 
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = color, y = price)) +
+  geom_boxplot()
+```
+
+
+## Unusual Observations: 
+
+During exploratory data analysis it's always a good idea to check for outliers or unusual observations. Sometimes outliers are errors in a dataset, and sometimes they are genuine observations that are just outside the normal bounds for a particular variable. Often times it is difficult to tell, so further exploration is generally required. Let's examine the distribution of diamond sizes by plotting a histogram of the y-dimension measured in mm. 
+
+```{r}
+ggplot(diamonds) + 
+  geom_histogram(mapping = aes(x = y), binwidth = 0.5, color = "white")
+```
+
+The unusually wide x-axis gives us reason to suspect that there may be a few outliers with counts so low that they don't even show up on a histogram. Change the scale of the y-axis to get a better look. 
+
+```{r}
+ggplot(diamonds) + 
+  geom_histogram(mapping = aes(x = y), binwidth = 0.5, color = "white") +
+  coord_cartesian(ylim = c(0, 50))
+```
+
+We can see two outlying observations around 30 and 60, and a handful at 0. Let's examine these cases further. We'll look at the `x` and `z` variables as well to get a better idea of the actual sizes and we will include `price` to see if there is anything unusual there. 
+
+```{r}
+unusual <- diamonds %>% 
+  filter(y < 3 | y > 20) %>% 
+  select(price, x, y, z) %>%
+  arrange(y)
+
+unusual
+```
+
+It is impossible for a diamond to have dimensions of 0, so we can assume these are measurement errors or perhaps a coded value which means something else. The other two observations have more reasonable `x` and `z` values, so it seems reasonable to assume that these are measurement errors. Let's remove all the unusual observations by subsetting the data inside the `ggplot()` function, and see what the distribution looks like. 
+
+```{r}
+ggplot(diamonds[(diamonds$y < 20) & (diamonds$y > 0),]) + 
+  geom_histogram(aes(y), binwidth = 0.05, color = "white")
+```
+
+By removing unusual observations we can get a much more detailed look at how the sizes of diamonds are distributed. I would guess the multiple peaks are due to jewelers rounding up to meet a particular size with a prespecified price point, but we never would have seen this interesting pattern without removing the outliers. 
 
