@@ -33,8 +33,7 @@ ggplot(data = diamonds, mapping = aes(x = color, y = price)) +
   geom_boxplot()
 ```
 
-
-## Unusual Observations: 
+## 7.3.3 Unusual Values: 
 
 During exploratory data analysis it's always a good idea to check for outliers or unusual observations. Sometimes outliers are errors in a dataset, and sometimes they are genuine observations that are just outside the normal bounds for a particular variable. Often times it is difficult to tell, so further exploration is generally required. Let's examine the distribution of diamond sizes by plotting a histogram of the y-dimension measured in mm. 
 
@@ -71,7 +70,7 @@ ggplot(diamonds[(diamonds$y < 20) & (diamonds$y > 0),]) +
 
 By removing unusual observations we can get a much more detailed look at how the sizes of diamonds are distributed. I would guess the multiple peaks are due to jewelers rounding up to meet a particular size with a prespecified price point, but we never would have seen this interesting pattern without removing the outliers. 
 
-## Section 7.5.2. Two Categorical Variables   
+## 7.5.2. Two Categorical Variables   
    
 One technique to visualise the corvariation between two categorical variables. 
 The book uses the diamond dataset. Two cateogrical variables in the example include cut and color. 
@@ -86,14 +85,13 @@ The book states - One way to do that is to reply on the built-in geom_count()
 
 
 ```{r}
-#install.packages("dplyr") (Commented out for smoother run)
 library(dplyr)
 library(ggplot2)
 ```   
    
 Plot diamonds dataset. Geom count to cut and color 
    
-```{r}
+```{r 1000}
 
 ggplot(data = diamonds) +
   geom_count(mapping = aes(x = cut, y = color))
@@ -103,7 +101,7 @@ ggplot(data = diamonds) +
 The book describes another way to visualise by using geom_title and fill aesthetic.
 The fill will be the total of teach each color to each cut 
    
-```{r}
+```{r 1001}
 diamonds %>% 
   count(color, cut) %>%  
   ggplot(mapping = aes(x = color, y = cut)) +
@@ -117,8 +115,77 @@ F and H colors have a higher amount of ideal diamonds but as many as G.
 To the contrast, the fair cut has the about the same amount for all colors. As the cut grade goes from fair to ideal colors G, F, H, and E have more diamonds than colors D, E, I, and J.
 
 
-## Section 7.5.3. Two Continuous Variables   
-   
+## 7.5.3.1: Two Continuous Variables
+
+#### Question 1 7.5.3.1 Exercises
+Instead of summarising the conditional distribution with a boxplot, you could use a frequency polygon. What do you need to consider when using cut_width() vs cut_number()? How does that impact a visualisation of the 2d distribution of carat and price?
+
+* Cut number puts the same number of points in each bin. Below, I have 20 points in each bin, and each boxplot shows a distribution based on that.
+
+```{r continuous variables exercises - question 1}
+
+# Cut width vs cut number comparison
+ # cut number
+ggplot(data = diamonds, mapping = aes(x = carat, y = price)) + 
+  geom_boxplot(mapping = aes(group = cut_number(carat, 20)))+
+     theme_minimal() + 
+   ggtitle("Cut Number")
+# cut width
+ggplot(data = diamonds, mapping = aes(x = carat, y = price)) + 
+  geom_boxplot(mapping = aes(group = cut_width(carat, 1, varwidth = TRUE)))+
+     theme_minimal()+ 
+   ggtitle("Cut Width")
+
+```
+#### Question 2 Visualise the distribution of carat, partitioned by price. 7.5.3.1 Exercises
+
+```{r continuous variables exercises - question 2}
+
+# carat by price
+
+ggplot(data = diamonds, mapping = aes(x = price, y = carat)) + 
+  geom_boxplot(mapping = aes(group = cut_width(price, 1000, varwidth = TRUE)))+
+     theme_minimal()+ 
+   ggtitle("Carat partitioned by price")
+
+```
+#### Question 3 - Distribution 7.5.3.1 Exercises
+How does the price distribution of very large diamonds compare to small diamonds? Is it as you expect, or does it surprise you?
+
+* It looks lik the greatest variation is in the 7-20k range, which is probably the majority of the market in terms of number of transactions. Most people are buying diamonds under 20k via many retailers and for many purposes. The really big diamonds must be tied to fewer wealthy buyers or industrial buyers and perhaps that constrains the variability.  Really cheap diamonds don't vary much too, perhaps also due to being used for specific purposes in industry.
+
+#### Question 4 - combined 7.5.3.1 Exercises
+Combine two of the techniques you’ve learned to visualise the combined distribution of cut, carat, and price.
+
+```{r continuous variables exercises - question 4}
+
+# Cut width vs cut number comparison
+
+ggplot(data = diamonds, mapping = aes(x = price, y = carat)) + 
+  geom_boxplot(mapping = aes(group = cut_width(price, 1000, varwidth = TRUE)))+
+  geom_boxplot(mapping = aes(group = cut_number(carat, 20)))+
+     theme_minimal()+ 
+   ggtitle("Partitioned by price with carat bins overlayed")
+
+```
+
+#### Question 5 - Scatterplot 7.5.3.1 Exercises
+
+Why is a scatterplot a better display than a binned plot for this case?
+
+* It shows the outliers better, and makes it much clearer that the majority of data follows a very tight slope. In the binned plots it's fun to see individual distributions but you lose the forest for the trees.
+ 
+
+```{r  scatterplot question }
+
+ggplot(data = diamonds) +
+  geom_point(mapping = aes(x = x, y = y)) +
+  coord_cartesian(xlim = c(4, 11), ylim = c(4, 11))
+
+```
+
+#### Need section number for this one
+
 Overplotting becomes an issue when there are many points in the same area, and using transparency, while simple, doesn't always help. Often there are SO many points in a close area that it still doesn't do the volume of points justice. There are a few other options to help with this issue - one of them is using hexagonal bins and color scale to represent the density of points in an area. This is demonstrated below:   
    
 First, load the package "hexbin":   
