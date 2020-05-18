@@ -1,8 +1,11 @@
 ---
 title: "EDA Techniques Summary"
+subtitle: "ST537 Spring 2020"
 author: "Group 6"
-date: "5/11/2020"
-output: pdf_document
+date: "5/17/2020"
+output: 
+  pdf_document: 
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -12,7 +15,7 @@ library(vcd)
 library(effects)
 ```
 
-## Section 7.3.1 Visualizing Categorical Distributions  
+## 7.3.1 Visualizing Categorical Distributions  
 
 ### doubledecker()  
 
@@ -22,7 +25,8 @@ library(effects)
 
 ```{r sect7-3, echo=TRUE, include=TRUE}
 dat <- Arrests
-doubledecker(released ~ citizen +colour, data=Arrests, gp =( gpar(fill = c("orange", "blue"))), main=TRUE)
+doubledecker(released ~ citizen +colour, data=Arrests, 
+             gp =( gpar(fill = c("orange", "blue"))), main=TRUE)
 
 
 ```
@@ -37,7 +41,7 @@ Another useful mosaic plot for visualizing associations is **__asssoc()__**. The
 assoc(released ~ citizen + colour, data=Arrests, shade=TRUE, main=TRUE, comnpress = FALSE)
 ```
 
-## Covariation of a Categorical and a Continuous Variable:
+## 7.3.2 Covariation of a Categorical and a Continuous Variable:
 
 The book gave two examples of how to deal with a categorical and continuous variable that have covariation. One technique that was given was comparing the **density** of variables rather than the **count**. This can lead to more interpretable visualization when the counts across categorical variables are not very even. The below plots compare the same data of the diamonds data set, but rather than looking at count the second plot looks at density. You can see that colors H and I and J appear to more regulary have diamonds in a higher price point. 
 
@@ -94,7 +98,7 @@ ggplot(diamonds[(diamonds$y < 20) & (diamonds$y > 0),]) +
 
 By removing unusual observations we can get a much more detailed look at how the sizes of diamonds are distributed. I would guess the multiple peaks are due to jewelers rounding up to meet a particular size with a prespecified price point, but we never would have seen this interesting pattern without removing the outliers. 
 
-## 7.5.2. Two Categorical Variables   
+## 7.5.2 Two Categorical Variables   
    
 One technique to visualise the corvariation between two categorical variables. 
 The book uses the diamond dataset. Two cateogrical variables in the example include cut and color. 
@@ -139,7 +143,7 @@ F and H colors have a higher amount of ideal diamonds but as many as G.
 To the contrast, the fair cut has the about the same amount for all colors. As the cut grade goes from fair to ideal colors G, F, H, and E have more diamonds than colors D, E, I, and J.
 
 
-## 7.5.3.1: Two Continuous Variables
+## 7.5.3.1 Two Continuous Variables
 
 #### Question 1 7.5.3.1 Exercises
 Instead of summarising the conditional distribution with a boxplot, you could use a frequency polygon. What do you need to consider when using cut_width() vs cut_number()? How does that impact a visualisation of the 2d distribution of carat and price?
@@ -208,7 +212,7 @@ ggplot(data = diamonds) +
 
 ```
 
-#### 7.5.3 
+## 7.5.3 Overplotting
 
 Overplotting becomes an issue when there are many points in the same area, and using transparency, while simple, doesn't always help. Often there are SO many points in a close area that it still doesn't do the volume of points justice. There are a few other options to help with this issue - one of them is using hexagonal bins and color scale to represent the density of points in an area. This is demonstrated below:   
    
